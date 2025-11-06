@@ -16,7 +16,7 @@ const teamData = [
     workingHours: 'Mon-Fri, 9:00-17:00',
     achievements: ['Awwwards Site of the Month, 2024', 'UX Design Award, 2023'],
     clientTypes: ['Startups', 'Enterprises', 'Non-Profits'],
-    photo: 'https://source.unsplash.com/200x200/?portrait,woman',
+    photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face&auto=format&q=80',
   },
   {
     id: 'mark-olsen',
@@ -33,7 +33,7 @@ const teamData = [
     workingHours: 'Mon-Fri, 8:00-16:00',
     achievements: ['React Conf Speaker, 2024'],
     clientTypes: ['Tech Companies', 'SMEs'],
-    photo: 'https://source.unsplash.com/200x200/?portrait,man',
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face&auto=format&q=80',
   },
   {
     id: 'lisa-chen',
@@ -50,6 +50,7 @@ const teamData = [
     workingHours: 'Mon-Fri, 10:00-18:00',
     achievements: [],
     clientTypes: ['E-Commerce', 'Creative Agencies'],
+    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face&auto=format&q=80',
   },
 ];
 

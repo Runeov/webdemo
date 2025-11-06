@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import useFadeIn from './hooks/useFadeIn';
 import Navbar from './components/Navbar.jsx';
 import Section from './components/Section.jsx';
@@ -17,17 +17,45 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const sectionRefs = useRef([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [renderKey, setRenderKey] = useState(0);
   useFadeIn();
 
+  // Debug logging
+  useEffect(() => {
+    console.log('🔍 App rendered, location:', location.pathname);
+    console.log('🔍 RenderKey:', renderKey);
+  }, [location, renderKey]);
+
   const sections = [
-    { id: 'hero', label: 'Home', component: Hero },
-    { id: 'about', label: 'About', component: About },
-    { id: 'services', label: 'Services', component: Services },
-    { id: 'portfolio', label: 'Portfolio', component: Portfolio },
-    { id: 'team', label: 'Team', component: Team },
-    { id: 'testimonials', label: 'Testimonials', component: Testimonials },
-    { id: 'contact', label: 'Contact', component: Contact },
+    { id: 'hero', label: 'Hjem', component: Hero },
+    { id: 'about', label: 'Om oss', component: About },
+    { id: 'services', label: 'Våre Planter', component: Services },
+    { id: 'portfolio', label: 'Galleri', component: Portfolio },
+    { id: 'team', label: 'Om Oss', component: Team },
+    { id: 'testimonials', label: 'Kundeanmeldelser', component: Testimonials },
+    { id: 'contact', label: 'Bestill', component: Contact },
   ];
+
+  const handleBackToTeam = () => {
+    console.log('🔙 Back button clicked');
+    navigate('/');
+    // Force re-render to ensure fade-in animations work
+    setRenderKey(prev => {
+      const newKey = prev + 1;
+      console.log('🔄 RenderKey updated to:', newKey);
+      return newKey;
+    });
+    // Use setTimeout to ensure navigation completes before scrolling
+    setTimeout(() => {
+      console.log('⏱️ Attempting to scroll to team section');
+      const teamSection = document.getElementById('team');
+      console.log('📍 Team section found:', !!teamSection);
+      if (teamSection) {
+        teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 transition-colors duration-300`}>
@@ -35,22 +63,26 @@ function App() {
         <Route
           path="/"
           element={
-            <>
+            <div key={renderKey} className="min-h-screen flex flex-col">
               <Navbar darkMode={darkMode} setDarkMode={setDarkMode} sectionRefs={sectionRefs} sections={sections} />
-              <main>
+              <main className="flex-1">
                 {sections.map(({ id, component: Component }, index) => (
-                  <Section key={id} id={id} ref={(el) => (sectionRefs.current[index] = el)}>
+                  <Section key={`${id}-${renderKey}`} id={id} ref={(el) => (sectionRefs.current[index] = el)}>
                     <Component />
                   </Section>
                 ))}
               </main>
               <Footer />
-            </>
+            </div>
           }
         />
         <Route
           path="/profile/:id"
-          element={<ProfilePage onBack={() => navigate('/#team')} />}
+          element={
+            <div className="min-h-screen flex flex-col">
+              <ProfilePage onBack={handleBackToTeam} />
+            </div>
+          }
         />
       </Routes>
     </div>

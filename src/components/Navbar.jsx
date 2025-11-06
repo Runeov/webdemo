@@ -14,7 +14,7 @@ function Navbar({ darkMode, setDarkMode, sectionRefs, sections }) {
     <nav className="sticky top-0 z-50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md shadow-sm border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300">
       <div className="container mx-auto px-4 @sm:px-6 @lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-0">
-          <div className="text-xl font-bold text-primary-600">WebDev Co.</div>
+          <div className="text-xl font-bold text-primary-600">Rhododendron Norge</div>
           <div className="hidden md:flex space-x-8">
             {sections.map(({ id, label }, index) => (
               <button

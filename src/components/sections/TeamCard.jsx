@@ -1,21 +1,36 @@
 import { Link } from 'react-router-dom';
+import SafeImage from '../SafeImage.jsx';
 
-function TeamCard({ id, name, role, email, phone, photo, description }) {
+function TeamCard({ id, name, role, email, phone, photo, description, office, experience, specialties, education, languages, workingHours, achievements, clientTypes }) {
+  // Prepare employee data to pass to ProfilePage
+  const employeeData = {
+    id,
+    name,
+    role,
+    email,
+    phone,
+    photo,
+    description,
+    office,
+    experience,
+    specialties,
+    education,
+    languages,
+    workingHours,
+    achievements,
+    clientTypes,
+  };
+
   return (
     <div className="card card-hover fade-in">
       <div className="p-6 text-center">
         <div className="mb-4">
-          {photo ? (
-            <img
-              src={photo}
-              alt={`${name} - ${role}`}
-              className="w-24 h-24 rounded-full mx-auto object-cover"
-            />
-          ) : (
-            <div className="w-24 h-24 rounded-full mx-auto bg-primary-500/10 flex items-center justify-center">
-              <span className="text-2xl text-primary-600">{name.charAt(0)}</span>
-            </div>
-          )}
+          <SafeImage
+            src={photo}
+            alt={`${name} - ${role}`}
+            fallback="/images/placeholder.svg"
+            className="w-24 h-24 rounded-full mx-auto object-cover"
+          />
         </div>
         
         <h3 className="text-lg font-semibold mb-1">{name}</h3>
@@ -30,6 +45,7 @@ function TeamCard({ id, name, role, email, phone, photo, description }) {
         <div className="space-y-2">
           <Link
             to={`/profile/${id}`}
+            state={{ employee: employeeData }}
             className="btn-primary w-full flex items-center justify-center gap-2 mb-2"
           >
             👤 Se profil
